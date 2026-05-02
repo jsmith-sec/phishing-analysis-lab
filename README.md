@@ -6,9 +6,9 @@ A hands-on phishing URL analysis lab using three open-source intelligence tools 
 
 Three verified phishing URLs were sourced from PhishTank and analyzed to identify attacker infrastructure, hosting details, email authentication failures, and campaign patterns. The lab demonstrates two distinct phishing techniques and highlights why no single tool provides complete coverage.
 
-**Tools:** PhishTank, VirusTotal, MXToolbox  
-**Samples:** 3 verified phishing URLs  
-**Targets Impersonated:** T-Mobile, Ledger Hardware Wallet (x2)  
+**Tools:** PhishTank, VirusTotal, MXToolbox, PhishTool  
+**Samples:** 3 verified phishing URLs + 2 phishing emails  
+**Targets Impersonated:** T-Mobile, Ledger Hardware Wallet (x2), Stellar Foundation, Celsius Network  
 **Host:** Apple Mac Mini M4, macOS
 
 ---
@@ -40,13 +40,30 @@ Three verified phishing URLs were sourced from PhishTank and analyzed to identif
 
 ---
 
-## Tool Comparison
+## Email Samples Analyzed (PhishTool)
+
+Two phishing emails from the PhishingPot repository were analyzed using PhishTool for header analysis, authentication checks, and URL extraction.
+
+| Email | Subject | Impersonated Brand | Sending Domain | Technique |
+|-------|---------|-------------------|----------------|-----------|
+| 1 | How to become a staker | Stellar Foundation | ayurmithrawellness.com | Compromised domain, double redirect (Google + bit.ly) |
+| 2 | Reminder: Withdraw your funds today | Celsius Network | mshtavr.com | Amazon SES abuse, urgency tactics, legitimate link padding |
+
+### Key Email Findings
+- Both emails target cryptocurrency users — consistent with the Ledger wallet phishing URLs
+- Both sent via Amazon SES — legitimate cloud email infrastructure abused for deliverability
+- Neither email passes SPF, DKIM, or DMARC — strict enforcement would have blocked both
+- Both use URL obfuscation and include legitimate domain references to add credibility
+- Email 2 exploits the real Celsius bankruptcy to target genuine victims waiting for fund recovery
+
+---
 
 | Tool | Best For | Limitation |
 |------|----------|------------|
 | PhishTank | WHOIS, hosting, network data, community verification | Limited data on platform-hosted phishing |
 | VirusTotal | Multi-vendor detection, HTML metadata, hosting IP | Low detection rate on new infrastructure |
 | MXToolbox | DNS, SPF, DMARC, CNAME analysis | Cannot detect content-level phishing on legitimate platforms |
+| PhishTool | Email header analysis, authentication checks, URL extraction | Designed for .eml files, limited URL-only analysis |
 
 **Key takeaway:** No single tool caught everything. Each tool provided unique intelligence not available in the others — multi-tool analysis is required for comprehensive phishing investigation.
 
@@ -87,11 +104,23 @@ Three verified phishing URLs were sourced from PhishTank and analyzed to identif
 ![Sample 3 VirusTotal Details](sample3_virustotal_details_2.png)
 ![Sample 3 MXToolbox](sample3_mxtoolbox.png)
 
+### Email 1 — Stellar Foundation Staking Scam
+
+![Email 1 PhishTool Details](email1_phishtool_details.png)
+![Email 1 PhishTool Authentication](email1_phishtool_authentication.png)
+![Email 1 PhishTool URLs](email1_phishtool_urls.png)
+
+### Email 2 — Celsius Network Claims Scam
+
+![Email 2 PhishTool Details](email2_phishtool_details.png)
+![Email 2 PhishTool Authentication](email2_phishtool_authentication.png)
+![Email 2 PhishTool URLs](email2_phishtool_urls.png)
+
 ---
 
 ## Full Report
 
-See [phishing_analysis_lab_report.pdf](phishing_analysis_lab_report.pdf) for the complete write-up including IOC tables, tool comparison analysis, campaign correlation findings, and detection recommendations.
+See [phishing_analysis_lab_report.pdf](phishing_analysis_lab_report.pdf) for the complete write-up including IOC tables, tool comparison analysis, email header analysis, campaign correlation findings, and detection recommendations.
 
 ---
 
@@ -100,6 +129,8 @@ See [phishing_analysis_lab_report.pdf](phishing_analysis_lab_report.pdf) for the
 - PhishTank (Cisco Talos) — phishing URL database and verification
 - VirusTotal — multi-vendor URL threat intelligence
 - MXToolbox SuperTool — DNS, SPF, DMARC, and CNAME analysis
+- PhishTool — email header analysis, authentication checks, and URL extraction
+- PhishingPot (GitHub) — open-source phishing email samples
 
 ---
 
