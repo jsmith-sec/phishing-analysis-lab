@@ -20,7 +20,7 @@
 
 </div>
 
-A hands-on phishing URL analysis lab using four open-source intelligence tools — PhishTank, VirusTotal, MXToolbox, and PhishTool — to investigate verified phishing URLs and real phishing emails, identify indicators of compromise, and compare detection capabilities across tools.
+A hands-on phishing analysis lab using four open-source intelligence tools — PhishTank, VirusTotal, MXToolbox, and PhishTool — to investigate verified phishing URLs and real phishing emails, identify indicators of compromise, and compare detection capabilities across tools.
 
 ## Overview
 
@@ -30,6 +30,8 @@ Three verified phishing URLs were sourced from PhishTank and analyzed to identif
 **Samples:** 3 verified phishing URLs + 2 phishing emails  
 **Targets Impersonated:** T-Mobile, Ledger Hardware Wallet (x2), Stellar Foundation, Celsius Network  
 **Host:** Apple Mac Mini M4, macOS
+
+> All screenshots referenced below live in the [`phishing screenshots`](phishing%20screenshots) folder. Only the most significant are embedded here — the full evidence set and complete write-up are in the folder and the [PDF report](phishing_analysis_lab_report.pdf).
 
 ---
 
@@ -52,21 +54,13 @@ Three verified phishing URLs were sourced from PhishTank and analyzed to identif
 - Zero email infrastructure (no MX, SPF, or DMARC records) — throwaway domain confirmed
 - WHOIS fully redacted, registered through Gname.com — commonly abused registrar
 
-<img src="sample1_phishtank.png" width="720" alt="Sample 1 PhishTank">
+<img src="phishing%20screenshots/sample1_phishtank.png" width="720" alt="Sample 1 PhishTank">
 
-*PhishTank record confirming the T-Mobile spoofing URL and its hosting details.*
+*PhishTank record with WHOIS — 4-day-old domain, Alibaba Cloud hosting, redacted registrant.*
 
-<img src="sample1_virustotal_detection.png" width="720" alt="Sample 1 VirusTotal Detection">
+<img src="phishing%20screenshots/sample1_virustotal_detection.png" width="720" alt="Sample 1 VirusTotal Detection">
 
 *VirusTotal — only 4/92 vendors flag the newly registered domain.*
-
-<img src="sample1_virustotal_details.png" width="720" alt="Sample 1 VirusTotal Details">
-
-*VirusTotal details showing hosting on Alibaba Cloud and domain metadata.*
-
-<img src="sample1_mxtoolbox.png" width="720" alt="Sample 1 MXToolbox">
-
-*MXToolbox confirms no MX/SPF/DMARC records — a throwaway domain.*
 
 ### Samples 2 & 3 — Coordinated Ledger Wallet Campaign
 
@@ -76,47 +70,15 @@ Three verified phishing URLs were sourced from PhishTank and analyzed to identif
 - 16-18/92 vendor detection rate — content analysis required, domain analysis insufficient
 - Sample 3 CNAME revealed attacker's Wix account identifier (`username.wix.com`) — actionable for takedown
 
-**Sample 2**
+<img src="phishing%20screenshots/sample2_virustotal_detection.png" width="720" alt="Sample 2 VirusTotal Detection">
 
-<img src="sample2_phishtank.png" width="720" alt="Sample 2 PhishTank">
+*Sample 2 — 18/92 vendors flag the Wix-hosted Ledger page; domain checks alone come back clean.*
 
-*PhishTank record for the first Wix-hosted Ledger phishing page.*
+<img src="phishing%20screenshots/sample3_virustotal_detection.png" width="720" alt="Sample 3 VirusTotal Detection">
 
-<img src="sample2_virustotal_detection.png" width="720" alt="Sample 2 VirusTotal Detection">
+*Sample 3 — 16/92 vendors, same serving IP (34.144.206.118) confirming a coordinated campaign.*
 
-*VirusTotal detection — 18/92 vendors, requiring content-level analysis.*
-
-<img src="sample2_virustotal_details_1.png" width="720" alt="Sample 2 VirusTotal Details">
-
-*VirusTotal details showing the shared hosting IP.*
-
-<img src="sample2_virustotal_details_2.png" width="720" alt="Sample 2 VirusTotal Details">
-
-*Additional VirusTotal metadata for Sample 2.*
-
-<img src="sample2_mxtoolbox.png" width="720" alt="Sample 2 MXToolbox">
-
-*MXToolbox DNS/CNAME analysis for the Wix-hosted domain.*
-
-**Sample 3**
-
-<img src="sample3_phishtank.png" width="720" alt="Sample 3 PhishTank">
-
-*PhishTank record for the second Wix-hosted Ledger phishing page.*
-
-<img src="sample3_virustotal_detection.png" width="720" alt="Sample 3 VirusTotal Detection">
-
-*VirusTotal detection — 16/92 vendors on the same coordinated campaign.*
-
-<img src="sample3_virustotal_details_1.png" width="720" alt="Sample 3 VirusTotal Details">
-
-*VirusTotal details confirming the shared hosting IP (34.144.206.118).*
-
-<img src="sample3_virustotal_details_2.png" width="720" alt="Sample 3 VirusTotal Details">
-
-*Additional VirusTotal metadata for Sample 3.*
-
-<img src="sample3_mxtoolbox.png" width="720" alt="Sample 3 MXToolbox">
+<img src="phishing%20screenshots/sample3_mxtoolbox.png" width="720" alt="Sample 3 MXToolbox">
 
 *MXToolbox CNAME analysis revealing the attacker's Wix account identifier — actionable for takedown.*
 
@@ -139,33 +101,21 @@ Two phishing emails from the PhishingPot repository were analyzed using PhishToo
 - Both use URL obfuscation and include legitimate domain references to add credibility
 - Email 2 exploits the real Celsius bankruptcy to target genuine victims waiting for fund recovery
 
-**Email 1 — Stellar Foundation Staking Scam**
+<img src="phishing%20screenshots/email1_phishtool_details.png" width="720" alt="Email 1 PhishTool Details">
 
-<img src="email1_phishtool_details.png" width="720" alt="Email 1 PhishTool Details">
+*Email 1 — PhishTool header analysis of the Stellar Foundation staking scam.*
 
-*PhishTool header analysis of the Stellar Foundation staking scam.*
+<img src="phishing%20screenshots/email1_phishtool_authentication.png" width="720" alt="Email 1 PhishTool Authentication">
 
-<img src="email1_phishtool_authentication.png" width="720" alt="Email 1 PhishTool Authentication">
+*Email 1 — SPF, DKIM, and DMARC all fail.*
 
-*Authentication results — SPF, DKIM, and DMARC all fail.*
+<img src="phishing%20screenshots/email2_phishtool_details.png" width="720" alt="Email 2 PhishTool Details">
 
-<img src="email1_phishtool_urls.png" width="720" alt="Email 1 PhishTool URLs">
+*Email 2 — PhishTool header analysis of the Celsius Network claims scam.*
 
-*Extracted URLs revealing the Google + bit.ly double redirect.*
+<img src="phishing%20screenshots/email2_phishtool_authentication.png" width="720" alt="Email 2 PhishTool Authentication">
 
-**Email 2 — Celsius Network Claims Scam**
-
-<img src="email2_phishtool_details.png" width="720" alt="Email 2 PhishTool Details">
-
-*PhishTool header analysis of the Celsius Network claims scam.*
-
-<img src="email2_phishtool_authentication.png" width="720" alt="Email 2 PhishTool Authentication">
-
-*Authentication results — sent via Amazon SES, failing SPF/DKIM/DMARC.*
-
-<img src="email2_phishtool_urls.png" width="720" alt="Email 2 PhishTool URLs">
-
-*Extracted URLs showing obfuscation and legitimate-link padding.*
+*Email 2 — sent via Amazon SES, failing SPF/DKIM/DMARC.*
 
 ---
 
@@ -194,7 +144,7 @@ Two phishing emails from the PhishingPot repository were analyzed using PhishToo
 
 ## Full Report
 
-See [phishing_analysis_lab_report.pdf](phishing_analysis_lab_report.pdf) for the complete write-up including IOC tables, tool comparison analysis, email header analysis, campaign correlation findings, and detection recommendations.
+See [phishing_analysis_lab_report.pdf](phishing_analysis_lab_report.pdf) for the complete write-up including IOC tables, tool comparison analysis, email header analysis, campaign correlation findings, and detection recommendations. Every screenshot referenced in this lab is available in the [`phishing screenshots`](phishing%20screenshots) folder.
 
 ---
 
@@ -205,6 +155,16 @@ See [phishing_analysis_lab_report.pdf](phishing_analysis_lab_report.pdf) for the
 - MXToolbox SuperTool — DNS, SPF, DMARC, and CNAME analysis
 - PhishTool — email header analysis, authentication checks, and URL extraction
 - PhishingPot (GitHub) — open-source phishing email samples
+
+---
+ 
+## Using Claude as a Tool
+ 
+I used Claude (Anthropic) as a tool throughout this lab, the same way I use it across
+the series. It helped me walk through each stage, deepen my understanding of the
+techniques as I ran them, and document what I did along the way. I directed the work,
+made the operational decisions, and built and validated every detection myself,
+verifying each command and result independently.
 
 ---
 
